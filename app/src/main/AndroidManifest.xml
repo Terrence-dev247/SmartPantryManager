@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartPantryManager"
         tools:targetApi="31">
+
+        <!-- Pantry list (home screen) -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,6 +23,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Add / edit one ingredient -->
+        <activity
+            android:name=".EditIngredientActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Recipes you can cook right now -->
+        <activity
+            android:name=".SuggestedActivity"
+            android:exported="false" />
+
+        <!-- Full ingredient list and method of one recipe -->
+        <activity
+            android:name=".RecipeDetailActivity"
+            android:exported="false" />
+
+        <!-- Settings -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

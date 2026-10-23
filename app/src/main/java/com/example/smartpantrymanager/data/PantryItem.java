@@ -10,5 +10,5 @@ public class PantryItem {
     public String name;
     public double quantity;
     public String unit;      // "g", "ml" or "pcs"
-    public Long expiryDate;  // epoch millis, can be null
+    public Long expiryDate;  // epoch millis, may be null
 }
