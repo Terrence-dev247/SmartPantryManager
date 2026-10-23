@@ -3,80 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="12dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="0dp"
-    app:strokeColor="@color/outline_soft"
-    app:strokeWidth="1dp">
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="78dp"
         android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingTop="9dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="9dp">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:cardBackgroundColor="@color/green_100"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp">
-            <ImageView
-                android:id="@+id/itemIcon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="11dp"
-                android:src="@drawable/ic_nav_pantry"
-                android:tint="@color/green_700" />
-        </com.google.android.material.card.MaterialCardView>
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/itemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textStyle="bold" />
+                android:textAppearance="?attr/textAppearanceTitleMedium" />
+
             <TextView
                 android:id="@+id/itemQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="#68736C" />
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
+
             <TextView
                 android:id="@+id/itemExpiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="2dp"
                 android:textAppearance="?attr/textAppearanceBodySmall" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/deleteButton"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/delete"
-            android:padding="11dp"
-            android:src="@drawable/ic_delete"
-            android:tint="#7A847E" />
+            android:src="@drawable/ic_delete" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

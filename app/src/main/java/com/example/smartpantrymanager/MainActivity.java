@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -25,7 +23,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Home screen: the pantry list.
@@ -38,9 +35,7 @@ public class MainActivity extends AppCompatActivity implements PantryAdapter.Lis
     private RecyclerView recycler;
     private TextView emptyView;
     private TextView alertBanner;
-    private View emptyCard;
     private EditText searchInput;
-    private List<PantryItem> allItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +45,16 @@ public class MainActivity extends AppCompatActivity implements PantryAdapter.Lis
         recycler = findViewById(R.id.pantryRecycler);
         emptyView = findViewById(R.id.emptyView);
         alertBanner = findViewById(R.id.alertBanner);
-        emptyCard = findViewById(R.id.emptyCard);
-        searchInput = findViewById(R.id.searchInput);
+        searchInput = findViewById(R.id.pantrySearch);
 
         adapter = new PantryAdapter(this);
-
-        // Live-search the pantry as the user types.
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
+        searchInput.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterPantry(s == null ? "" : s.toString());
+                adapter.setSearchQuery(s.toString());
+                updateEmptyState();
             }
-
-            @Override public void afterTextChanged(Editable s) { }
+            @Override public void afterTextChanged(android.text.Editable s) {}
         });
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(adapter);
@@ -96,38 +87,21 @@ public class MainActivity extends AppCompatActivity implements PantryAdapter.Lis
     }
 
     private void showItems(List<PantryItem> items) {
-        allItems = new ArrayList<>(items);
-        filterPantry(searchInput == null ? "" : searchInput.getText().toString());
+        adapter.setItems(items);
+        updateEmptyState();
+        showExpiryBanner(items);
     }
 
-    /** Filters the already-loaded pantry locally, without another database query. */
-    private void filterPantry(String query) {
-        String needle = query == null ? "" : query.trim().toLowerCase(Locale.ROOT);
-        List<PantryItem> filtered = new ArrayList<>();
-
-        for (PantryItem item : allItems) {
-            String name = item.name == null ? "" : item.name.toLowerCase(Locale.ROOT);
-            if (needle.isEmpty() || name.contains(needle)) {
-                filtered.add(item);
-            }
-        }
-
-        adapter.setItems(filtered);
-
-        boolean noResults = filtered.isEmpty();
-        emptyCard.setVisibility(noResults ? View.VISIBLE : View.GONE);
-        recycler.setVisibility(noResults ? View.GONE : View.VISIBLE);
-
-        if (allItems.isEmpty()) {
-            emptyView.setText(R.string.pantry_empty);
-        } else if (!needle.isEmpty()) {
-            emptyView.setText(getString(R.string.no_search_results, query.trim()));
+    private void updateEmptyState() {
+        boolean noResults = adapter.getItemCount() == 0;
+        boolean searching = searchInput != null && !searchInput.getText().toString().trim().isEmpty();
+        if (noResults && searching) {
+            emptyView.setText(R.string.pantry_search_empty);
         } else {
             emptyView.setText(R.string.pantry_empty);
         }
-
-        // Keep expiry warnings based on the full pantry, not the search result.
-        showExpiryBanner(allItems);
+        emptyView.setVisibility(noResults ? View.VISIBLE : View.GONE);
+        recycler.setVisibility(noResults ? View.GONE : View.VISIBLE);
     }
 
     /** Shows a warning banner for items that expire within 3 days (if enabled in Settings). */

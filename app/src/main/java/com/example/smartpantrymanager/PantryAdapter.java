@@ -30,15 +30,38 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.ViewHolder
     }
 
     private final List<PantryItem> items = new ArrayList<>();
+    private final List<PantryItem> allItems = new ArrayList<>();
     private final Listener listener;
+    private String searchQuery = "";
 
     public PantryAdapter(Listener listener) {
         this.listener = listener;
     }
 
     public void setItems(List<PantryItem> newItems) {
+        allItems.clear();
+        allItems.addAll(newItems);
+        applyFilter();
+    }
+
+    /** Filters the database-backed pantry list by ingredient name. */
+    public void setSearchQuery(String query) {
+        searchQuery = query == null ? "" : query.trim().toLowerCase(java.util.Locale.ROOT);
+        applyFilter();
+    }
+
+    private void applyFilter() {
         items.clear();
-        items.addAll(newItems);
+        if (searchQuery.isEmpty()) {
+            items.addAll(allItems);
+        } else {
+            for (PantryItem item : allItems) {
+                String name = item.name == null ? "" : item.name.toLowerCase(java.util.Locale.ROOT);
+                if (name.contains(searchQuery)) {
+                    items.add(item);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 

@@ -8,6 +8,8 @@
 
     <!-- Pantry list -->
     <string name="title_pantry">My Pantry</string>
+    <string name="search_pantry">Search pantry ingredients</string>
+    <string name="pantry_search_empty">No pantry items match your search.</string>
     <string name="pantry_empty">Your pantry is empty. Tap + to add the ingredients you have at home.</string>
     <string name="add_ingredient">Add ingredient</string>
     <string name="expiring_banner">Expiring within 3 days: %1$s</string>
@@ -76,5 +78,4 @@
     <string name="expires_tomorrow">Expires tomorrow</string>
     <string name="expires_in">Expires in %1$d days</string>
     <string name="expires_on">Expires %1$s</string>
-    <string name="no_search_results">No ingredients found for "%1$s".</string>
 </resources>
